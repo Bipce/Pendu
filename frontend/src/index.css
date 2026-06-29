@@ -1,1 +1,19 @@
 @import "tailwindcss";
+
+@layer base {
+  body {
+    @apply bg-slate-950 text-slate-100 antialiased;
+  }
+
+  h1 {
+    @apply text-3xl font-bold tracking-tight;
+  }
+
+  a {
+    @apply text-purple-400 transition-colors hover:text-purple-300;
+  }
+
+  ::selection {
+    @apply bg-purple-500/30 text-white;
+  }
+}
