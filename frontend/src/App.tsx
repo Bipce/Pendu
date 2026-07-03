@@ -1,6 +1,6 @@
-import { io } from "socket.io-client";
-import { useEffect, useState, type SubmitEvent, type ChangeEvent } from "react";
+import { useState, type SubmitEvent, type ChangeEvent } from "react";
 import { z } from "zod";
+import { useHangmanStore } from "./store/hangmanStore.ts";
 
 const schema = z.object({
   username: z.string().trim().min(1, "Ce champ est obligatoire.").max(20, "Maximum 20 caractères."),
@@ -11,28 +11,21 @@ function App() {
   const [errorMessage, setErrorMessage] = useState("");
   const [joined, setJoined] = useState(false);
 
-  useEffect(() => {
-    if (!joined) return;
-
-    const socket = io("http://localhost:3000", { auth: { username } });
-
-    return () => {
-      socket.disconnect();
-    };
-  }, [username, joined]);
+  const connect = useHangmanStore(s => s.connect);
 
   const handleOnSubmit = (e: SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const result = schema.safeParse({ username });
+    const { success, data, error } = result;
 
-    if (result.success === false) {
-      setErrorMessage(result.error.issues[0].message);
+    if (success === false) {
+      setErrorMessage(error.issues[0].message);
       return;
     }
 
     setJoined(true);
-    setUsername(result.data.username);
+    connect(data.username);
     setErrorMessage("");
   };
 
