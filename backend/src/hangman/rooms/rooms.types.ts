@@ -9,4 +9,6 @@ export interface Room {
   players: Player[];
 }
 
-export type RoomsResponse = { isOk: true; room: Room } | { isOk: false; error: string };
+export type RoomsResponse = { isOk: true; room: Room } | { isOk: false; error: RoomErrorCode };
+
+export type RoomErrorCode = "ROOM_NOT_FOUND";
