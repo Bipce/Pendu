@@ -1,5 +1,6 @@
 import {
   ConnectedSocket,
+  MessageBody,
   OnGatewayConnection,
   OnGatewayDisconnect,
   SubscribeMessage,
@@ -10,7 +11,7 @@ import { plainToInstance } from "class-transformer";
 import { JoinDto } from "./dto/join.dto";
 import { validateSync } from "class-validator";
 import { RoomsService } from "./rooms/rooms.service";
-import { Player, ReturnResponse } from "./rooms/rooms.types";
+import { Player, RoomsResponse } from "./rooms/rooms.types";
 
 interface HangmanSocketData {
   username: string;
@@ -46,10 +47,24 @@ export class HangmanGateway implements OnGatewayConnection, OnGatewayDisconnect 
   }
 
   @SubscribeMessage("create_room")
-  async createRoom(@ConnectedSocket() client: HangmanSocket): Promise<ReturnResponse> {
+  async createRoom(@ConnectedSocket() client: HangmanSocket): Promise<RoomsResponse> {
     const player: Player = { id: client.id, username: client.data.username };
     const room = this.roomsService.create(player);
     await client.join(room.id);
+
+    return { isOk: true, room };
+  }
+
+  @SubscribeMessage("join_room")
+  async joinRoom(
+    @ConnectedSocket() client: HangmanSocket,
+    @MessageBody() data: { roomId: string },
+  ): Promise<RoomsResponse> {
+    const player: Player = { id: client.id, username: client.data.username };
+    const room = this.roomsService.join(data.roomId, player);
+
+    if (!room) return { isOk: false, error: "Room not found" };
+    await client.join(data.roomId);
 
     return { isOk: true, room };
   }

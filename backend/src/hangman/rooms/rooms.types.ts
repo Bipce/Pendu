@@ -9,7 +9,4 @@ export interface Room {
   players: Player[];
 }
 
-export interface ReturnResponse {
-  isOk: boolean;
-  room: Room;
-}
+export type RoomsResponse = { isOk: true; room: Room } | { isOk: false; error: string };

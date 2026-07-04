@@ -17,4 +17,13 @@ export class RoomsService {
   get(id: string): Room | undefined {
     return this.rooms.get(id);
   }
+
+  join(id: string, player: Player): Room | undefined {
+    const room = this.get(id);
+
+    if (!room) return undefined;
+    room.players.push(player);
+
+    return room;
+  }
 }
