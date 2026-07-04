@@ -6,20 +6,20 @@ export class RoomsService {
   private readonly rooms = new Map<string, Room>();
 
   create(host: Player): Room {
-    const key = crypto.randomUUID().slice(0, 6);
-    const room: Room = { id: key, hostId: host.id, players: [host] };
+    const roomId = crypto.randomUUID().slice(0, 6);
+    const room: Room = { id: roomId, hostId: host.id, players: [host] };
 
-    this.rooms.set(key, room);
+    this.rooms.set(roomId, room);
 
     return room;
   }
 
-  get(id: string): Room | undefined {
-    return this.rooms.get(id);
+  get(roomId: string): Room | undefined {
+    return this.rooms.get(roomId);
   }
 
-  join(id: string, player: Player): Room | undefined {
-    const room = this.get(id);
+  join(roomId: string, player: Player): Room | undefined {
+    const room = this.get(roomId);
 
     if (!room) return undefined;
     room.players.push(player);
