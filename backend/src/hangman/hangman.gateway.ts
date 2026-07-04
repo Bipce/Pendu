@@ -7,23 +7,22 @@ import {
   WebSocketGateway,
   WebSocketServer,
 } from "@nestjs/websockets";
-import { DefaultEventsMap, Server, Socket } from "socket.io";
+import { Server } from "socket.io";
 import { plainToInstance } from "class-transformer";
 import { JoinDto } from "./dto/join.dto";
 import { validateSync } from "class-validator";
 import { RoomsService } from "./rooms/rooms.service";
 import { Player, RoomsResponse } from "./rooms/rooms.types";
-
-interface HangmanSocketData {
-  username: string;
-  roomId?: string;
-}
-
-type HangmanSocket = Socket<DefaultEventsMap, DefaultEventsMap, DefaultEventsMap, HangmanSocketData>;
+import {
+  ClientToServerEvents,
+  type HangmanSocket,
+  type JoinRoomPayload,
+  ServerToClientEvents,
+} from "./hangman.socket.types";
 
 @WebSocketGateway({ cors: { origin: "http://localhost:5173" } })
 export class HangmanGateway implements OnGatewayConnection, OnGatewayDisconnect {
-  @WebSocketServer() private readonly server: Server;
+  @WebSocketServer() private readonly server: Server<ClientToServerEvents, ServerToClientEvents>;
 
   constructor(private readonly roomsService: RoomsService) {}
 
@@ -66,7 +65,7 @@ export class HangmanGateway implements OnGatewayConnection, OnGatewayDisconnect 
   @SubscribeMessage("join_room")
   async joinRoom(
     @ConnectedSocket() client: HangmanSocket,
-    @MessageBody() data: { roomId: string },
+    @MessageBody() data: JoinRoomPayload,
   ): Promise<RoomsResponse> {
     const player: Player = { id: client.id, username: client.data.username };
     const room = this.roomsService.join(data.roomId, player);
