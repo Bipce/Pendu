@@ -26,4 +26,21 @@ export class RoomsService {
 
     return room;
   }
+
+  leave(roomId: string, playerId: string): Room | undefined {
+    const room = this.get(roomId);
+    if (!room) return undefined;
+
+    const players = room.players.filter(p => p.id !== playerId);
+    room.players = players;
+
+    if (players.length === 0) {
+      this.rooms.delete(roomId);
+      return undefined;
+    }
+
+    if (playerId === room.hostId) room.hostId = players[0].id;
+
+    return room;
+  }
 }

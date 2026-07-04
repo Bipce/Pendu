@@ -5,8 +5,9 @@ import {
   OnGatewayDisconnect,
   SubscribeMessage,
   WebSocketGateway,
+  WebSocketServer,
 } from "@nestjs/websockets";
-import { DefaultEventsMap, Socket } from "socket.io";
+import { DefaultEventsMap, Server, Socket } from "socket.io";
 import { plainToInstance } from "class-transformer";
 import { JoinDto } from "./dto/join.dto";
 import { validateSync } from "class-validator";
@@ -15,12 +16,15 @@ import { Player, RoomsResponse } from "./rooms/rooms.types";
 
 interface HangmanSocketData {
   username: string;
+  roomId?: string;
 }
 
 type HangmanSocket = Socket<DefaultEventsMap, DefaultEventsMap, DefaultEventsMap, HangmanSocketData>;
 
 @WebSocketGateway({ cors: { origin: "http://localhost:5173" } })
 export class HangmanGateway implements OnGatewayConnection, OnGatewayDisconnect {
+  @WebSocketServer() private readonly server: Server;
+
   constructor(private readonly roomsService: RoomsService) {}
 
   handleConnection(client: HangmanSocket) {
@@ -43,7 +47,10 @@ export class HangmanGateway implements OnGatewayConnection, OnGatewayDisconnect 
   }
 
   handleDisconnect(client: HangmanSocket) {
-    if (client.data.username) console.log("Disconnect: ", client.data.username);
+    if (!client.data.roomId) return;
+
+    const room = this.roomsService.leave(client.data.roomId, client.id);
+    if (room) this.server.to(room.id).emit("room_updated", room);
   }
 
   @SubscribeMessage("create_room")
@@ -51,6 +58,7 @@ export class HangmanGateway implements OnGatewayConnection, OnGatewayDisconnect 
     const player: Player = { id: client.id, username: client.data.username };
     const room = this.roomsService.create(player);
     await client.join(room.id);
+    client.data.roomId = room.id;
 
     return { isOk: true, room };
   }
@@ -65,6 +73,7 @@ export class HangmanGateway implements OnGatewayConnection, OnGatewayDisconnect 
 
     if (!room) return { isOk: false, error: "Room not found" };
     await client.join(data.roomId);
+    client.data.roomId = room.id;
 
     return { isOk: true, room };
   }
