@@ -1,8 +1,16 @@
-import { OnGatewayConnection, OnGatewayDisconnect, WebSocketGateway } from "@nestjs/websockets";
+import {
+  ConnectedSocket,
+  OnGatewayConnection,
+  OnGatewayDisconnect,
+  SubscribeMessage,
+  WebSocketGateway,
+} from "@nestjs/websockets";
 import { DefaultEventsMap, Socket } from "socket.io";
 import { plainToInstance } from "class-transformer";
 import { JoinDto } from "./dto/join.dto";
 import { validateSync } from "class-validator";
+import { RoomsService } from "./rooms/rooms.service";
+import { Player, ReturnResponse } from "./rooms/rooms.types";
 
 interface HangmanSocketData {
   username: string;
@@ -12,6 +20,8 @@ type HangmanSocket = Socket<DefaultEventsMap, DefaultEventsMap, DefaultEventsMap
 
 @WebSocketGateway({ cors: { origin: "http://localhost:5173" } })
 export class HangmanGateway implements OnGatewayConnection, OnGatewayDisconnect {
+  constructor(private readonly roomsService: RoomsService) {}
+
   handleConnection(client: HangmanSocket) {
     // The username comes from the client-controlled handshake, so it is untrusted: type it as unknown.
     const username: unknown = client.handshake.auth.username;
@@ -33,5 +43,14 @@ export class HangmanGateway implements OnGatewayConnection, OnGatewayDisconnect 
 
   handleDisconnect(client: HangmanSocket) {
     if (client.data.username) console.log("Disconnect: ", client.data.username);
+  }
+
+  @SubscribeMessage("create_room")
+  async createRoom(@ConnectedSocket() client: HangmanSocket): Promise<ReturnResponse> {
+    const player: Player = { id: client.id, username: client.data.username };
+    const room = this.roomsService.create(player);
+    await client.join(room.id);
+
+    return { isOk: true, room };
   }
 }

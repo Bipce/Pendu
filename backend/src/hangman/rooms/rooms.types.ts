@@ -8,3 +8,8 @@ export interface Room {
   hostId: string;
   players: Player[];
 }
+
+export interface ReturnResponse {
+  isOk: boolean;
+  room: Room;
+}
