@@ -47,25 +47,21 @@ const JoinPage = () => {
       </header>
 
       <main className="flex flex-1 flex-col items-center justify-center">
-        <form onSubmit={handleOnSubmit} className="text-center">
-          <div className="flex items-baseline gap-4">
-            <label htmlFor="username">Pseudo : </label>
+        <form onSubmit={handleOnSubmit} className="px-30 py-10 text-center">
+          <div className="mt-10 text-left">
+            <label htmlFor="username">Pseudo</label>
             <div>
               <input
                 type="text"
                 id="username"
                 onChange={handleOnChange}
-                className="mb-2 rounded border border-purple-800/70 px-4 py-2 disabled:cursor-not-allowed"
+                className="autofill-fix input-field mt-2 px-4 py-2"
               />
-              {errorMessage && <p className="text-red-500">{errorMessage}</p>}
+              <p className="text-danger block h-6">{errorMessage}</p>
             </div>
           </div>
 
-          <button
-            disabled={username.length === 0}
-            className="mt-10 rounded border border-purple-800/70 p-4 hover:cursor-pointer hover:bg-purple-800 disabled:cursor-not-allowed disabled:bg-transparent"
-            type="submit"
-          >
+          <button disabled={username.length === 0} className="main-button mt-20 p-4" type="submit">
             Rejoindre
           </button>
         </form>

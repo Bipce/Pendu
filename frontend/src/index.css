@@ -1,8 +1,24 @@
 @import "tailwindcss";
 
+@theme {
+  /* Background */
+  --color-surface: var(--color-slate-950);
+  --color-surface-raised: var(--color-slate-900);
+
+  /* Text */
+  --color-content: var(--color-slate-100);
+
+  /* Accent / interaction */
+  --color-accent: var(--color-sky-800);
+  --color-accent-hover: var(--color-sky-700);
+
+  /* State */
+  --color-danger: var(--color-red-500);
+}
+
 @layer base {
   body {
-    @apply bg-slate-950 text-slate-100 antialiased;
+    @apply text-content bg-surface antialiased;
   }
 
   h1 {
@@ -10,10 +26,37 @@
   }
 
   a {
-    @apply text-purple-400 transition-colors hover:text-purple-300;
+    @apply text-sky-400 transition-colors hover:text-sky-300;
+  }
+
+  input {
+    @apply outline-none disabled:cursor-not-allowed;
   }
 
   ::selection {
-    @apply bg-purple-500/30 text-white;
+    @apply bg-sky-500/30;
+  }
+}
+
+@layer components {
+  .main-button {
+    @apply border-accent/50 hover:bg-accent active:bg-accent-hover rounded border hover:cursor-pointer disabled:cursor-not-allowed disabled:bg-transparent;
+  }
+
+  .input-field {
+    @apply bg-surface-raised border-accent/50 focus:border-accent-hover rounded border;
+  }
+}
+
+@layer utilities {
+  .autofill-fix:-webkit-autofill,
+  .autofill-fix:-webkit-autofill:hover,
+  .autofill-fix:-webkit-autofill:focus,
+  .autofill-fix:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 1000px var(--color-surface-raised) inset;
+    box-shadow: 0 0 0 1000px var(--color-surface-raised) inset;
+    -webkit-text-fill-color: var(--color-content);
+    caret-color: var(--color-content);
+    transition: background-color 5000s ease-in-out 0s;
   }
 }
