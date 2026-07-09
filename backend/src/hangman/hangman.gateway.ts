@@ -71,8 +71,10 @@ export class HangmanGateway implements OnGatewayConnection, OnGatewayDisconnect 
     const room = this.roomsService.join(data.roomId, player);
 
     if (!room) return { isOk: false, error: "ROOM_NOT_FOUND" };
+
     await client.join(data.roomId);
     client.data.roomId = room.id;
+    this.server.to(room.id).emit("room_updated", room);
 
     return { isOk: true, room };
   }
