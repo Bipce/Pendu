@@ -41,31 +41,25 @@ const JoinPage = () => {
   };
 
   return (
-    <div className="flex min-h-dvh flex-col items-center p-10">
-      <header>
-        <h1>Pendu</h1>
-      </header>
-
-      <main className="flex flex-1 flex-col items-center justify-center">
-        <form onSubmit={handleOnSubmit} className="px-30 py-10 text-center">
-          <div className="mt-10 text-left">
-            <label htmlFor="username">Pseudo</label>
-            <div>
-              <input
-                type="text"
-                id="username"
-                onChange={handleOnChange}
-                className="autofill-fix input-field mt-2 px-4 py-2"
-              />
-              <p className="text-danger block h-6">{errorMessage}</p>
-            </div>
+    <div className="flex flex-1 flex-col items-center justify-center">
+      <form onSubmit={handleOnSubmit} className="px-30 py-10 text-center">
+        <div className="mt-10 text-left">
+          <label htmlFor="username">Pseudo</label>
+          <div>
+            <input
+              type="text"
+              id="username"
+              onChange={handleOnChange}
+              className="autofill-fix input-field mt-2 px-4 py-2"
+            />
+            <p className="error-message">{errorMessage}</p>
           </div>
+        </div>
 
-          <button disabled={username.length === 0} className="main-button mt-20 p-4" type="submit">
-            Rejoindre
-          </button>
-        </form>
-      </main>
+        <button disabled={username.length === 0} className="main-button w-full px-4 py-2" type="submit">
+          Rejoindre
+        </button>
+      </form>
     </div>
   );
 };

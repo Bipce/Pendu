@@ -5,8 +5,9 @@ import type { JoinRoomPayload } from "../socket/socket.types.ts";
 
 interface HangmanState {
   isConnected: boolean;
-  connect: (username: string) => void;
   room: Room | undefined;
+  connect: (username: string) => void;
+  disconnect: () => void;
   createRoom: () => Promise<void>;
   joinRoom: (data: JoinRoomPayload) => Promise<RoomsResponse>;
 }
@@ -18,6 +19,10 @@ export const useHangmanStore = create<HangmanState>(set => ({
   connect: username => {
     socket.auth = { username };
     socket.connect();
+  },
+
+  disconnect: () => {
+    socket.disconnect();
   },
 
   createRoom: async () => {

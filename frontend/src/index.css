@@ -30,7 +30,7 @@
   }
 
   a {
-    @apply text-sky-400 transition-colors hover:text-sky-300;
+    @apply active:text-accent-active transition-colors hover:text-sky-300;
   }
 
   input {
