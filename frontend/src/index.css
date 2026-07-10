@@ -6,6 +6,8 @@
   --color-surface-raised: var(--color-slate-900);
 
   /* Text */
+  --font-sans: "Roboto", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Titan One", ui-sans-serif, sans-serif;
   --color-content: var(--color-slate-100);
   --color-content-disabled: var(--color-slate-400);
 
@@ -24,7 +26,7 @@
   }
 
   h1 {
-    @apply text-3xl font-bold tracking-tight;
+    @apply font-display text-3xl tracking-wide;
   }
 
   a {
