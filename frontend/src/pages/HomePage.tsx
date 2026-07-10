@@ -50,13 +50,13 @@ const JoinPage = () => {
               type="text"
               id="username"
               onChange={handleOnChange}
-              className="autofill-fix input-field mt-2 px-4 py-2"
+              className="autofill-fix input-field main-padding mt-2"
             />
             <p className="error-message">{errorMessage}</p>
           </div>
         </div>
 
-        <button disabled={username.length === 0} className="main-button w-full px-4 py-2" type="submit">
+        <button disabled={username.length === 0} className="main-button main-padding w-full" type="submit">
           Rejoindre
         </button>
       </form>
