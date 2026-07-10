@@ -44,11 +44,19 @@
 
 @layer components {
   .main-button {
-    @apply bg-accent enabled:hover:bg-accent-hover enabled:active:bg-accent-active disabled:text-content-disabled ml-2 cursor-pointer rounded-md disabled:cursor-not-allowed disabled:opacity-50;
+    @apply bg-accent enabled:hover:bg-accent-hover enabled:active:bg-accent-active disabled:text-content-disabled cursor-pointer rounded-md disabled:cursor-not-allowed disabled:opacity-50;
   }
 
   .input-field {
     @apply bg-surface-raised border-accent/50 focus:border-accent-hover rounded-md border;
+  }
+
+  .error-message {
+    @apply text-danger mt-1 h-6 text-sm tracking-wide italic;
+  }
+
+  .main-padding {
+    @apply px-4 py-2;
   }
 }
 
