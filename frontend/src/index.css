@@ -7,10 +7,12 @@
 
   /* Text */
   --color-content: var(--color-slate-100);
+  --color-content-disabled: var(--color-slate-400);
 
   /* Accent / interaction */
   --color-accent: var(--color-sky-800);
   --color-accent-hover: var(--color-sky-700);
+  --color-accent-active: var(--color-sky-600);
 
   /* State */
   --color-danger: var(--color-red-500);
@@ -40,11 +42,11 @@
 
 @layer components {
   .main-button {
-    @apply border-accent/50 hover:bg-accent active:bg-accent-hover rounded border hover:cursor-pointer disabled:cursor-not-allowed disabled:bg-transparent;
+    @apply bg-accent enabled:hover:bg-accent-hover enabled:active:bg-accent-active disabled:text-content-disabled ml-2 cursor-pointer rounded-md disabled:cursor-not-allowed disabled:opacity-50;
   }
 
   .input-field {
-    @apply bg-surface-raised border-accent/50 focus:border-accent-hover rounded border;
+    @apply bg-surface-raised border-accent/50 focus:border-accent-hover rounded-md border;
   }
 }
 
