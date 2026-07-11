@@ -1,12 +1,12 @@
-import { useHangmanStore } from "../store/hangmanStore.ts";
-import { ERROR_MESSAGES } from "../constantes.ts";
 import { useShallow } from "zustand/react/shallow";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
+import { useHangmanStore } from "../store/hangmanStore.ts";
+import { ERROR_MESSAGES } from "../constantes.ts";
 
 const MenuPage = () => {
-  const { createRoom, joinRoom, isConnected } = useHangmanStore(
-    useShallow(s => ({ createRoom: s.createRoom, joinRoom: s.joinRoom, isConnected: s.isConnected })),
+  const { createRoom, joinRoom, isConnected, room } = useHangmanStore(
+    useShallow(s => ({ createRoom: s.createRoom, joinRoom: s.joinRoom, isConnected: s.isConnected, room: s.room })),
   );
   const [roomId, setRoomId] = useState("");
   const [roomErrorMessage, setRoomErrorMessage] = useState("");
@@ -29,6 +29,10 @@ const MenuPage = () => {
   useEffect(() => {
     if (!isConnected) navigate("/");
   }, [isConnected, navigate]);
+
+  useEffect(() => {
+    if (room) navigate("/lobby");
+  }, [room, navigate]);
 
   return (
     <div className="flex flex-1 flex-col items-center justify-center gap-5">

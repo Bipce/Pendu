@@ -18,7 +18,7 @@ const JoinPage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (isConnected === true) navigate("/lobby");
+    if (isConnected === true) navigate("/menu");
   }, [isConnected, navigate]);
 
   const handleOnSubmit = (e: SubmitEvent<HTMLFormElement>) => {
