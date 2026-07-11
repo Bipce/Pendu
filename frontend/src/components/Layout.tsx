@@ -1,10 +1,10 @@
 import { Outlet } from "react-router";
-import Navbar from "./Navbar.tsx";
+import Header from "./Header.tsx";
 
 const Layout = () => {
   return (
     <div className="flex min-h-dvh flex-col">
-      <Navbar />
+      <Header />
 
       <main className="flex flex-1 flex-col">
         <Outlet />

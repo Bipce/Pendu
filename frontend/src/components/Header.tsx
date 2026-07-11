@@ -3,7 +3,7 @@ import { useHangmanStore } from "../store/hangmanStore.ts";
 import { useShallow } from "zustand/react/shallow";
 import { useNavigate } from "react-router";
 
-const Navbar = () => {
+const Header = () => {
   const navigate = useNavigate();
   const { isConnected, disconnect } = useHangmanStore(
     useShallow(s => ({ disconnect: s.disconnect, isConnected: s.isConnected })),
@@ -29,4 +29,4 @@ const Navbar = () => {
   );
 };
 
-export default Navbar;
+export default Header;
