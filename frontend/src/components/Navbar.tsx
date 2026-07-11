@@ -15,7 +15,7 @@ const Navbar = () => {
   };
 
   return (
-    <header className="bg-surface-raised sticky top-0 z-10 flex items-center justify-between px-15 py-5">
+    <header className="bg-surface-raised border-separator sticky top-0 z-10 flex items-center justify-between border-b px-15 py-5">
       {isConnected ? (
         <button onClick={handleLogout} className="main-button p-1.5">
           <LogOut size={25} />

@@ -43,7 +43,7 @@ const MenuPage = () => {
         </button>
       </section>
 
-      <div className="w-1/5 border-t border-slate-600" />
+      <div className="border-separator w-1/5 min-w-56 border-t" />
 
       <section className="flex flex-col items-center justify-center">
         <input

@@ -18,6 +18,9 @@
 
   /* State */
   --color-danger: var(--color-red-500);
+
+  /* Border */
+  --color-separator: var(--color-slate-600);
 }
 
 @layer base {
