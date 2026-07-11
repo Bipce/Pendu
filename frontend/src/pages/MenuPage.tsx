@@ -5,8 +5,8 @@ import { useHangmanStore } from "../store/hangmanStore.ts";
 import { ERROR_MESSAGES } from "../constantes.ts";
 
 const MenuPage = () => {
-  const { createRoom, joinRoom, isConnected, room } = useHangmanStore(
-    useShallow(s => ({ createRoom: s.createRoom, joinRoom: s.joinRoom, isConnected: s.isConnected, room: s.room })),
+  const { createRoom, joinRoom, room } = useHangmanStore(
+    useShallow(s => ({ createRoom: s.createRoom, joinRoom: s.joinRoom, room: s.room })),
   );
   const [roomId, setRoomId] = useState("");
   const [roomErrorMessage, setRoomErrorMessage] = useState("");
@@ -25,10 +25,6 @@ const MenuPage = () => {
   const handleCreateRoom = async () => {
     await createRoom();
   };
-
-  useEffect(() => {
-    if (!isConnected) navigate("/");
-  }, [isConnected, navigate]);
 
   useEffect(() => {
     if (room) navigate("/lobby");
