@@ -10,6 +10,7 @@
   --font-display: "Titan One", ui-sans-serif, sans-serif;
   --color-content: var(--color-slate-100);
   --color-content-disabled: var(--color-slate-400);
+  --color-content-secondary: var(--color-slate-400);
 
   /* Accent / interaction */
   --color-accent: var(--color-sky-800);
@@ -48,6 +49,10 @@
 @layer components {
   .main-button {
     @apply bg-accent enabled:hover:bg-accent-hover enabled:active:bg-accent-active disabled:text-content-disabled cursor-pointer rounded-md disabled:cursor-not-allowed disabled:opacity-50;
+  }
+
+  .secondary-button {
+    @apply border-accent cursor-pointer rounded-md border hover:border-sky-400 hover:text-sky-300 active:border-sky-300 disabled:cursor-not-allowed;
   }
 
   .input-field {
