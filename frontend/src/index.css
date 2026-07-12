@@ -11,6 +11,7 @@
   --color-content: var(--color-slate-100);
   --color-content-disabled: var(--color-slate-400);
   --color-content-secondary: var(--color-slate-400);
+  --color-content-tertiary: var(--color-sky-500);
 
   /* Accent / interaction */
   --color-accent: var(--color-sky-800);

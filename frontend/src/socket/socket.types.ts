@@ -14,4 +14,8 @@ export interface JoinRoomPayload {
   roomId: string;
 }
 
+export interface AuthPayload {
+  username: string;
+}
+
 export type HangmanSocket = Socket<ServerToClientEvents, ClientToServerEvents>;

@@ -1,11 +1,12 @@
 import { useState } from "react";
 import { Navigate } from "react-router";
 import { Check, Copy, Crown } from "lucide-react";
+import { useShallow } from "zustand/react/shallow";
 import { useHangmanStore } from "../store/hangmanStore.ts";
 
 const LobbyPage = () => {
   const [isCopied, setIsCopied] = useState(false);
-  const room = useHangmanStore(s => s.room);
+  const { room, localPlayer } = useHangmanStore(useShallow(s => ({ room: s.room, localPlayer: s.localPlayer })));
 
   if (!room) return <Navigate to="/menu" replace />;
 
@@ -30,7 +31,10 @@ const LobbyPage = () => {
         </h2>
         <ul>
           {room.players.map(p => (
-            <li key={p.id} className="mb-2 flex items-center gap-2">
+            <li
+              key={p.id}
+              className={`mb-2 flex items-center gap-2 ${localPlayer?.id === p.id ? "text-content-tertiary" : ""}`}
+            >
               {room.hostId === p.id && (
                 <>
                   <span className="sr-only">hôte</span>
