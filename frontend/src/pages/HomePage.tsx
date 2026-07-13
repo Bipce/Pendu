@@ -46,17 +46,12 @@ const JoinPage = () => {
         <div className="mt-10 text-left">
           <label htmlFor="username">Pseudo</label>
           <div>
-            <input
-              type="text"
-              id="username"
-              onChange={handleOnChange}
-              className="autofill-fix input-field main-padding mt-2"
-            />
+            <input type="text" id="username" onChange={handleOnChange} className="autofill-fix input-field mt-2" />
             <p className="error-message">{errorMessage}</p>
           </div>
         </div>
 
-        <button disabled={username.length === 0} className="main-button main-padding w-full" type="submit">
+        <button disabled={username.length === 0} className="main-button w-full" type="submit">
           Rejoindre
         </button>
       </form>

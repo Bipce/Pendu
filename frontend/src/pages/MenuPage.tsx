@@ -38,7 +38,7 @@ const MenuPage = () => {
           <label htmlFor="isPrivate">Private</label>
         </div>
 
-        <button className="main-button main-padding" onClick={handleCreateRoom}>
+        <button className="main-button" onClick={handleCreateRoom}>
           Créer une partie
         </button>
       </section>
@@ -55,7 +55,7 @@ const MenuPage = () => {
           aria-label="Id de la partie"
         />
 
-        <button className="main-button main-padding mx-auto my-2 w-fit" onClick={handleJoinRoom}>
+        <button className="main-button mx-auto my-2 w-fit" onClick={handleJoinRoom}>
           Rejoindre
         </button>
         <p className="error-message">{roomErrorMessage}</p>

@@ -49,15 +49,15 @@
 
 @layer components {
   .main-button {
-    @apply bg-accent enabled:hover:bg-accent-hover enabled:active:bg-accent-active disabled:text-content-disabled cursor-pointer rounded-md disabled:cursor-not-allowed disabled:opacity-50;
+    @apply bg-accent enabled:hover:bg-accent-hover enabled:active:bg-accent-active disabled:text-content-disabled cursor-pointer rounded-md px-4 py-2 disabled:cursor-not-allowed disabled:opacity-50;
   }
 
   .secondary-button {
-    @apply border-accent cursor-pointer rounded-md border hover:border-sky-400 hover:text-sky-300 active:border-sky-300 disabled:cursor-not-allowed;
+    @apply border-accent cursor-pointer rounded-md border px-4 py-2 hover:border-sky-400 hover:text-sky-300 active:border-sky-300 disabled:cursor-not-allowed;
   }
 
   .input-field {
-    @apply bg-surface-raised border-accent/50 focus:border-accent-hover rounded-md border;
+    @apply bg-surface-raised border-accent/50 focus:border-accent-hover rounded-md border px-4 py-2;
   }
 
   .error-message {

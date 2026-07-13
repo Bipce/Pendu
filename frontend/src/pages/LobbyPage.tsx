@@ -20,7 +20,7 @@ const LobbyPage = () => {
     <div className="flex flex-1">
       <section
         aria-labelledby="players-title"
-        className="bg-surface-raised/70 border-separator w-1/3 max-w-52 border-r px-4 py-2"
+        className="bg-surface-raised/70 border-separator main-padding w-1/3 max-w-52 border-r"
       >
         <h2 id="players-title" className="text-content-secondary mb-5 font-bold">
           JOUEURS
