@@ -92,6 +92,7 @@ const LobbyPage = () => {
               onClick={() => {
                 if (lives > 1) setLives(prev => prev - 1);
               }}
+              label="Retirer une vie"
               className="rounded-r-none"
             />
             <label htmlFor="lives" className="sr-only">
@@ -111,6 +112,7 @@ const LobbyPage = () => {
               onClick={() => {
                 if (lives < 11) setLives(prev => prev + 1);
               }}
+              label="Ajouter une vie"
               className="rounded-l-none"
             />
           </div>
