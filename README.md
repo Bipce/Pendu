@@ -79,7 +79,7 @@ Open the app in two browser tabs to try it with several players.
 
 ---
 
-## 🚀 Features
+## ✨ Features
 
 ### ✅ Available
 
