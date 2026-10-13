@@ -22,7 +22,7 @@ import {
 
 @WebSocketGateway({ cors: { origin: "http://localhost:5173" } })
 export class HangmanGateway implements OnGatewayConnection, OnGatewayDisconnect {
-  @WebSocketServer() private readonly server: Server<ClientToServerEvents, ServerToClientEvents>;
+  @WebSocketServer() private readonly server!: Server<ClientToServerEvents, ServerToClientEvents>;
 
   constructor(private readonly roomsService: RoomsService) {}
 
