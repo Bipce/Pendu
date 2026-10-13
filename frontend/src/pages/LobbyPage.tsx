@@ -88,7 +88,7 @@ const LobbyPage = () => {
           <div>
             <TertiaryTitle title="Vies" />
             <LivesButton
-              delta="-"
+              delta="−"
               onClick={() => {
                 if (lives > 1) setLives(prev => prev - 1);
               }}
