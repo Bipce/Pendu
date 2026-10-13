@@ -46,6 +46,7 @@ const LobbyPage = () => {
                 </>
               )}
               {p.username}
+              {localPlayer?.id === p.id && <span className="sr-only"> (vous)</span>}
             </li>
           ))}
         </ul>
