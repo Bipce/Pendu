@@ -7,7 +7,7 @@ export class RoomsService {
 
   create(host: Player): Room {
     const roomId = crypto.randomUUID().slice(0, 6);
-    const room: Room = { id: roomId, hostId: host.id, players: [host] };
+    const room: Room = { id: roomId, hostId: host.id, players: [host], difficulty: "MEDIUM", lives: 6 };
 
     this.rooms.set(roomId, room);
 
