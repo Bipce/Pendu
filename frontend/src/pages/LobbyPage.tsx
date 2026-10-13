@@ -41,7 +41,7 @@ const LobbyPage = () => {
             >
               {room.hostId === p.id && (
                 <>
-                  <span className="sr-only">hôte</span>
+                  <span className="sr-only">(hôte) </span>
                   <Crown size={19} className="text-yellow-400" />
                 </>
               )}
