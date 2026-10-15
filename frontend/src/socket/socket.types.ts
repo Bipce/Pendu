@@ -1,5 +1,5 @@
 import { Socket } from "socket.io-client";
-import type { Room, RoomsResponse } from "../types/room.types.ts";
+import type { Room, RoomAckResponse, RoomOptions, RoomsResponse } from "../types/room.types.ts";
 
 export interface ServerToClientEvents {
   room_updated: (room: Room) => void;
@@ -8,6 +8,7 @@ export interface ServerToClientEvents {
 export interface ClientToServerEvents {
   create_room: (ack: (res: RoomsResponse) => void) => void;
   join_room: (payload: JoinRoomPayload, ack: (res: RoomsResponse) => void) => void;
+  set_options: (payload: RoomOptions, ack: (res: RoomAckResponse) => void) => void;
 }
 
 export interface JoinRoomPayload {
