@@ -1,5 +1,5 @@
 import { Injectable } from "@nestjs/common";
-import { Player, Room } from "./rooms.types";
+import { Player, Room, RoomOptions } from "./rooms.types";
 
 @Injectable()
 export class RoomsService {
@@ -40,6 +40,16 @@ export class RoomsService {
     }
 
     if (playerId === room.hostId) room.hostId = players[0].id;
+
+    return room;
+  }
+
+  setOptions(roomId: string, options: RoomOptions): Room | undefined {
+    const room = this.get(roomId);
+
+    if (!room) return undefined;
+    room.difficulty = options.difficulty;
+    room.lives = options.lives;
 
     return room;
   }
