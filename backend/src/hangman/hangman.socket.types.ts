@@ -1,4 +1,4 @@
-import { Room, RoomsResponse } from "./rooms/rooms.types";
+import { Room, RoomAckResponse, RoomOptions, RoomsResponse } from "./rooms/rooms.types";
 import { DefaultEventsMap, Socket } from "socket.io";
 
 export interface ServerToClientEvents {
@@ -8,6 +8,7 @@ export interface ServerToClientEvents {
 export interface ClientToServerEvents {
   create_room: (ack: (res: RoomsResponse) => void) => void;
   join_room: (payload: JoinRoomPayload, ack: (res: RoomsResponse) => void) => void;
+  set_options: (payload: RoomOptions, ack: (res: RoomAckResponse) => void) => void;
 }
 
 export interface JoinRoomPayload {
