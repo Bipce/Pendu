@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { socket } from "../socket/socket.ts";
-import type { Player, Room, RoomsResponse } from "../types/room.types.ts";
+import type { Player, Room, RoomAckResponse, RoomOptions, RoomsResponse } from "../types/room.types.ts";
 import type { AuthPayload, JoinRoomPayload } from "../socket/socket.types.ts";
 
 interface HangmanState {
@@ -11,6 +11,7 @@ interface HangmanState {
   disconnect: () => void;
   createRoom: () => Promise<void>;
   joinRoom: (data: JoinRoomPayload) => Promise<RoomsResponse>;
+  setOptions: (roomOptions: RoomOptions) => Promise<RoomAckResponse>;
 }
 
 export const useHangmanStore = create<HangmanState>(set => ({
@@ -36,5 +37,9 @@ export const useHangmanStore = create<HangmanState>(set => ({
     const res = await socket.emitWithAck("join_room", data);
     if (res.isOk) set({ room: res.room });
     return res;
+  },
+
+  setOptions: async data => {
+    return socket.emitWithAck("set_options", data);
   },
 }));
