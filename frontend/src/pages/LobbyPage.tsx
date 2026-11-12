@@ -132,7 +132,7 @@ const LobbyPage = () => {
               delta="−"
               onClick={handleRemoveLife}
               label="Retirer une vie"
-              className="rounded-r-none"
+              className="rounded-r-none border-r-0"
               disabled={room.lives <= 1 || !isHost}
             />
             <label htmlFor="lives" className="sr-only">
@@ -151,7 +151,7 @@ const LobbyPage = () => {
               delta="+"
               onClick={handleAddLife}
               label="Ajouter une vie"
-              className="rounded-l-none"
+              className="rounded-l-none border-l-0"
               disabled={room.lives >= 11 || !isHost}
             />
           </div>
