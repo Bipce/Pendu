@@ -6,6 +6,7 @@ import { useHangmanStore } from "../store/hangmanStore.ts";
 import DifficultyRadio from "../components/lobby/DifficultyRadio.tsx";
 import LivesButton from "../components/lobby/LivesButton.tsx";
 import TertiaryTitle from "../components/ui/TertiaryTitle.tsx";
+import type { Difficulty } from "../types/room.types.ts";
 
 const LobbyPage = () => {
   const [isCopied, setIsCopied] = useState(false);
@@ -30,6 +31,10 @@ const LobbyPage = () => {
   const handleAddLife = async () => {
     if (room.lives >= 11) return;
     await setOptions({ lives: room.lives + 1 });
+  };
+
+  const handleDifficultyChange = async (difficulty: Difficulty) => {
+    await setOptions({ difficulty });
   };
 
   return (
@@ -91,9 +96,30 @@ const LobbyPage = () => {
             <TertiaryTitle title="Difficulté" />
 
             <fieldset className="flex">
-              <DifficultyRadio id="easy" label="Facile" className="rounded-r-none" />
-              <DifficultyRadio id="medium" label="Moyen" className="rounded-l-none rounded-r-none" />
-              <DifficultyRadio id="hard" label="Difficile" className="rounded-l-none" />
+              <DifficultyRadio
+                id="easy"
+                label="Facile"
+                className="rounded-r-none"
+                value="EASY"
+                checked={room.difficulty === "EASY"}
+                onSelect={handleDifficultyChange}
+              />
+              <DifficultyRadio
+                id="medium"
+                label="Moyen"
+                className="rounded-l-none rounded-r-none"
+                value="MEDIUM"
+                checked={room.difficulty === "MEDIUM"}
+                onSelect={handleDifficultyChange}
+              />
+              <DifficultyRadio
+                id="hard"
+                label="Difficile"
+                className="rounded-l-none"
+                value="HARD"
+                checked={room.difficulty === "HARD"}
+                onSelect={handleDifficultyChange}
+              />
             </fieldset>
           </div>
 
