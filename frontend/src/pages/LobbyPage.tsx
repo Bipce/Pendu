@@ -103,6 +103,7 @@ const LobbyPage = () => {
                 value="EASY"
                 checked={room.difficulty === "EASY"}
                 onSelect={handleDifficultyChange}
+                disabled={!isHost}
               />
               <DifficultyRadio
                 id="medium"
@@ -111,6 +112,7 @@ const LobbyPage = () => {
                 value="MEDIUM"
                 checked={room.difficulty === "MEDIUM"}
                 onSelect={handleDifficultyChange}
+                disabled={!isHost}
               />
               <DifficultyRadio
                 id="hard"
@@ -119,6 +121,7 @@ const LobbyPage = () => {
                 value="HARD"
                 checked={room.difficulty === "HARD"}
                 onSelect={handleDifficultyChange}
+                disabled={!isHost}
               />
             </fieldset>
           </div>

@@ -7,9 +7,10 @@ interface DifficultyProps {
   value: Difficulty;
   checked: boolean;
   onSelect: (value: Difficulty) => void;
+  disabled?: boolean;
 }
 
-const DifficultyRadio = ({ id, label, value, checked, onSelect, className = "" }: DifficultyProps) => {
+const DifficultyRadio = ({ id, label, value, checked, onSelect, disabled, className = "" }: DifficultyProps) => {
   return (
     <div>
       <input
@@ -20,10 +21,11 @@ const DifficultyRadio = ({ id, label, value, checked, onSelect, className = "" }
         value={value}
         checked={checked}
         onChange={() => onSelect(value)}
+        disabled={disabled}
       />
       <label
         htmlFor={id}
-        className={`input-border hover:bg-accent-hover peer-checked:bg-accent text-content-secondary peer-checked:text-content peer-focus-visible:border-content cursor-pointer px-4 py-2 ${className}`}
+        className={`input-border peer-enabled:hover:bg-accent-hover peer-checked:bg-accent text-content-secondary peer-checked:text-content peer-focus-visible:border-content cursor-pointer px-4 py-2 peer-disabled:cursor-not-allowed peer-disabled:opacity-80 ${className}`}
       >
         {label}
       </label>
