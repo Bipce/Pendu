@@ -138,15 +138,12 @@ const LobbyPage = () => {
             <label htmlFor="lives" className="sr-only">
               Nombre de vies
             </label>
-            <input
-              value={room.lives}
-              type="number"
+            <output
               id="lives"
-              min={1}
-              max={11}
-              readOnly
-              className="input-border appearance-none rounded-l-none rounded-r-none px-3 py-2"
-            />
+              className={`input-border inline-block w-16 rounded-l-none rounded-r-none py-2 ${isHost ? "cursor-default" : "bg-accent-disabled cursor-not-allowed opacity-65"}`}
+            >
+              {room.lives}
+            </output>
             <LivesButton
               delta="+"
               onClick={handleAddLife}
