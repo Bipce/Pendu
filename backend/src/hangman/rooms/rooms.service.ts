@@ -44,12 +44,12 @@ export class RoomsService {
     return room;
   }
 
-  setOptions(roomId: string, options: RoomOptions): Room | undefined {
+  setOptions(roomId: string, options: Partial<RoomOptions>): Room | undefined {
     const room = this.get(roomId);
 
     if (!room) return undefined;
-    room.difficulty = options.difficulty;
-    room.lives = options.lives;
+    if (options.difficulty !== undefined) room.difficulty = options.difficulty;
+    if (options.lives !== undefined) room.lives = options.lives;
 
     return room;
   }
