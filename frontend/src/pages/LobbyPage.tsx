@@ -9,8 +9,9 @@ import TertiaryTitle from "../components/ui/TertiaryTitle.tsx";
 
 const LobbyPage = () => {
   const [isCopied, setIsCopied] = useState(false);
-  const [lives, setLives] = useState(6);
-  const { room, localPlayer } = useHangmanStore(useShallow(s => ({ room: s.room, localPlayer: s.localPlayer })));
+  const { room, localPlayer, setOptions } = useHangmanStore(
+    useShallow(s => ({ room: s.room, localPlayer: s.localPlayer, setOptions: s.setOptions })),
+  );
 
   if (!room) return <Navigate to="/menu" replace />;
 
@@ -18,6 +19,16 @@ const LobbyPage = () => {
     await navigator.clipboard.writeText(room.id);
     setIsCopied(true);
     setTimeout(() => setIsCopied(false), 2000);
+  };
+
+  const handleRemoveLife = async () => {
+    if (room.lives <= 1) return;
+    await setOptions({ lives: room.lives - 1 });
+  };
+
+  const handleAddLife = async () => {
+    if (room.lives >= 11) return;
+    await setOptions({ lives: room.lives + 1 });
   };
 
   return (
@@ -87,19 +98,12 @@ const LobbyPage = () => {
 
           <div>
             <TertiaryTitle title="Vies" />
-            <LivesButton
-              delta="−"
-              onClick={() => {
-                if (lives > 1) setLives(prev => prev - 1);
-              }}
-              label="Retirer une vie"
-              className="rounded-r-none"
-            />
+            <LivesButton delta="−" onClick={handleRemoveLife} label="Retirer une vie" className="rounded-r-none" />
             <label htmlFor="lives" className="sr-only">
               Nombre de vies
             </label>
             <input
-              value={lives}
+              value={room.lives}
               type="number"
               id="lives"
               min={1}
@@ -107,14 +111,7 @@ const LobbyPage = () => {
               readOnly
               className="input-border appearance-none rounded-l-none rounded-r-none px-3 py-2"
             />
-            <LivesButton
-              delta="+"
-              onClick={() => {
-                if (lives < 11) setLives(prev => prev + 1);
-              }}
-              label="Ajouter une vie"
-              className="rounded-l-none"
-            />
+            <LivesButton delta="+" onClick={handleAddLife} label="Ajouter une vie" className="rounded-l-none" />
           </div>
         </section>
 
