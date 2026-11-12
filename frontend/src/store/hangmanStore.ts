@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { socket } from "../socket/socket.ts";
-import type { Player, Room, RoomAckResponse, RoomOptions, RoomsResponse } from "../types/room.types.ts";
-import type { AuthPayload, JoinRoomPayload } from "../socket/socket.types.ts";
+import type { Player, Room, RoomAckResponse, RoomsResponse } from "../types/room.types.ts";
+import type { AuthPayload, JoinRoomPayload, SetOptionsPayload } from "../socket/socket.types.ts";
 
 interface HangmanState {
   isConnected: boolean;
@@ -11,7 +11,7 @@ interface HangmanState {
   disconnect: () => void;
   createRoom: () => Promise<void>;
   joinRoom: (data: JoinRoomPayload) => Promise<RoomsResponse>;
-  setOptions: (roomOptions: RoomOptions) => Promise<RoomAckResponse>;
+  setOptions: (roomOptions: SetOptionsPayload) => Promise<RoomAckResponse>;
 }
 
 export const useHangmanStore = create<HangmanState>(set => ({

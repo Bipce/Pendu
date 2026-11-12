@@ -8,12 +8,14 @@ export interface ServerToClientEvents {
 export interface ClientToServerEvents {
   create_room: (ack: (res: RoomsResponse) => void) => void;
   join_room: (payload: JoinRoomPayload, ack: (res: RoomsResponse) => void) => void;
-  set_options: (payload: RoomOptions, ack: (res: RoomAckResponse) => void) => void;
+  set_options: (payload: SetOptionsPayload, ack: (res: RoomAckResponse) => void) => void;
 }
 
 export interface JoinRoomPayload {
   roomId: string;
 }
+
+export type SetOptionsPayload = Partial<RoomOptions>;
 
 export interface AuthPayload {
   username: string;
