@@ -98,7 +98,13 @@ const LobbyPage = () => {
 
           <div>
             <TertiaryTitle title="Vies" />
-            <LivesButton delta="−" onClick={handleRemoveLife} label="Retirer une vie" className="rounded-r-none" />
+            <LivesButton
+              delta="−"
+              onClick={handleRemoveLife}
+              label="Retirer une vie"
+              className="rounded-r-none"
+              disabled={room.lives <= 1}
+            />
             <label htmlFor="lives" className="sr-only">
               Nombre de vies
             </label>
@@ -111,7 +117,13 @@ const LobbyPage = () => {
               readOnly
               className="input-border appearance-none rounded-l-none rounded-r-none px-3 py-2"
             />
-            <LivesButton delta="+" onClick={handleAddLife} label="Ajouter une vie" className="rounded-l-none" />
+            <LivesButton
+              delta="+"
+              onClick={handleAddLife}
+              label="Ajouter une vie"
+              className="rounded-l-none"
+              disabled={room.lives >= 11}
+            />
           </div>
         </section>
 

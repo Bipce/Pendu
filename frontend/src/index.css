@@ -17,6 +17,7 @@
   --color-accent: var(--color-sky-800);
   --color-accent-hover: var(--color-sky-700);
   --color-accent-active: var(--color-sky-600);
+  --color-accent-disabled: var(--color-slate-950);
 
   /* State */
   --color-danger: var(--color-red-500);
