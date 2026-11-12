@@ -12,12 +12,13 @@ import { plainToInstance } from "class-transformer";
 import { JoinDto } from "./dto/join.dto";
 import { validateSync } from "class-validator";
 import { RoomsService } from "./rooms/rooms.service";
-import { Player, RoomsResponse } from "./rooms/rooms.types";
+import type { Player, RoomAckResponse, RoomsResponse } from "./rooms/rooms.types";
 import {
   ClientToServerEvents,
   type HangmanSocket,
   type JoinRoomPayload,
   ServerToClientEvents,
+  type SetOptionsPayload,
 } from "./hangman.socket.types";
 
 @WebSocketGateway({ cors: { origin: "http://localhost:5173" } })
@@ -78,5 +79,20 @@ export class HangmanGateway implements OnGatewayConnection, OnGatewayDisconnect 
     client.to(room.id).emit("room_updated", room);
 
     return { isOk: true, room };
+  }
+
+  @SubscribeMessage("set_options")
+  setRoomOptions(@ConnectedSocket() client: HangmanSocket, @MessageBody() data: SetOptionsPayload): RoomAckResponse {
+    const roomId = client.data.roomId;
+    if (!roomId) return { isOk: false, error: "ROOM_NOT_FOUND" };
+
+    const room = this.roomsService.get(roomId);
+    if (!room) return { isOk: false, error: "ROOM_NOT_FOUND" };
+
+    if (room.hostId !== client.id) return { isOk: false, error: "NOT_HOST" };
+    this.roomsService.setOptions(roomId, data);
+
+    this.server.to(roomId).emit("room_updated", room);
+    return { isOk: true };
   }
 }
