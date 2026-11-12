@@ -14,6 +14,7 @@ const LobbyPage = () => {
   );
 
   if (!room) return <Navigate to="/menu" replace />;
+  const isHost = localPlayer?.id === room.hostId;
 
   const handleCopy = async () => {
     await navigator.clipboard.writeText(room.id);
@@ -103,7 +104,7 @@ const LobbyPage = () => {
               onClick={handleRemoveLife}
               label="Retirer une vie"
               className="rounded-r-none"
-              disabled={room.lives <= 1}
+              disabled={room.lives <= 1 || !isHost}
             />
             <label htmlFor="lives" className="sr-only">
               Nombre de vies
@@ -122,12 +123,14 @@ const LobbyPage = () => {
               onClick={handleAddLife}
               label="Ajouter une vie"
               className="rounded-l-none"
-              disabled={room.lives >= 11}
+              disabled={room.lives >= 11 || !isHost}
             />
           </div>
         </section>
 
-        <button className="main-button">Démarrer la partie</button>
+        <button className="main-button" disabled={!isHost}>
+          Démarrer la partie
+        </button>
       </section>
     </div>
   );
