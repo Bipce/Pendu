@@ -70,10 +70,12 @@ export class HangmanGateway implements OnGatewayConnection, OnGatewayDisconnect 
     @MessageBody() data: JoinRoomPayload,
   ): Promise<RoomsResponse> {
     const player: Player = { id: client.id, username: client.data.username };
-    const room = this.roomsService.join(data.roomId, player);
 
+    const room = this.roomsService.get(data.roomId);
     if (!room) return { isOk: false, error: "ROOM_NOT_FOUND" };
+    if (room.status !== "WAITING") return { isOk: false, error: "GAME_ALREADY_STARTED" };
 
+    this.roomsService.join(data.roomId, player);
     await client.join(data.roomId);
     client.data.roomId = room.id;
     client.to(room.id).emit("room_updated", room);
