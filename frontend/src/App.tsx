@@ -4,6 +4,7 @@ import ProtectedRoute from "./components/ProtectedRoute.tsx";
 import HomePage from "./pages/HomePage.tsx";
 import MenuPage from "./pages/MenuPage.tsx";
 import LobbyPage from "./pages/LobbyPage.tsx";
+import GamePage from "./pages/GamePage.tsx";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
           <Route element={<ProtectedRoute />}>
             <Route path="/menu" element={<MenuPage />} />
             <Route path="/lobby" element={<LobbyPage />} />
+            <Route path="/game" element={<GamePage />} />
           </Route>
         </Route>
       </Routes>

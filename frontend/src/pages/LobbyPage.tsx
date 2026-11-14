@@ -15,6 +15,7 @@ const LobbyPage = () => {
   );
 
   if (!room) return <Navigate to="/menu" replace />;
+  if (room.status === "PLAYING") return <Navigate to="/game" replace />;
   const isHost = localPlayer?.id === room.hostId;
 
   const handleCopy = async () => {
