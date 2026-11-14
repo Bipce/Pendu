@@ -9,6 +9,7 @@ export interface Room {
   players: Player[];
   difficulty: Difficulty;
   lives: number;
+  status: RoomStatus;
 }
 
 export type RoomOptions = Pick<Room, "difficulty" | "lives">;
@@ -18,5 +19,7 @@ export type RoomsResponse = { isOk: true; room: Room } | { isOk: false; error: R
 export type RoomAckResponse = { isOk: true } | { isOk: false; error: RoomErrorCode };
 
 export type RoomErrorCode = "ROOM_NOT_FOUND" | "NOT_HOST";
+
+export type RoomStatus = "WAITING" | "PLAYING" | "FINISHED";
 
 export type Difficulty = "EASY" | "MEDIUM" | "HARD";
