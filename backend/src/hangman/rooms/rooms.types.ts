@@ -18,7 +18,7 @@ export type RoomsResponse = { isOk: true; room: Room } | { isOk: false; error: R
 
 export type RoomAckResponse = { isOk: true } | { isOk: false; error: RoomErrorCode };
 
-export type RoomErrorCode = "ROOM_NOT_FOUND" | "NOT_HOST";
+export type RoomErrorCode = "ROOM_NOT_FOUND" | "NOT_HOST" | "GAME_ALREADY_STARTED";
 
 export type RoomStatus = "WAITING" | "PLAYING" | "FINISHED";
 

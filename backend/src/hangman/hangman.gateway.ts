@@ -57,6 +57,7 @@ export class HangmanGateway implements OnGatewayConnection, OnGatewayDisconnect 
   async createRoom(@ConnectedSocket() client: HangmanSocket): Promise<RoomsResponse> {
     const player: Player = { id: client.id, username: client.data.username };
     const room = this.roomsService.create(player);
+
     await client.join(room.id);
     client.data.roomId = room.id;
 
@@ -92,6 +93,23 @@ export class HangmanGateway implements OnGatewayConnection, OnGatewayDisconnect 
     this.roomsService.setOptions(roomId, data);
 
     this.server.to(roomId).emit("room_updated", room);
+    return { isOk: true };
+  }
+
+  @SubscribeMessage("start_game")
+  startGame(@ConnectedSocket() client: HangmanSocket): RoomAckResponse {
+    const roomId = client.data.roomId;
+    if (!roomId) return { isOk: false, error: "ROOM_NOT_FOUND" };
+
+    const room = this.roomsService.get(roomId);
+    if (!room) return { isOk: false, error: "ROOM_NOT_FOUND" };
+
+    if (room.hostId !== client.id) return { isOk: false, error: "NOT_HOST" };
+    if (room.status !== "WAITING") return { isOk: false, error: "GAME_ALREADY_STARTED" };
+
+    this.roomsService.startGame(roomId);
+    this.server.to(roomId).emit("room_updated", room);
+
     return { isOk: true };
   }
 }

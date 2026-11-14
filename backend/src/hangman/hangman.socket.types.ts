@@ -9,6 +9,7 @@ export interface ClientToServerEvents {
   create_room: (ack: (res: RoomsResponse) => void) => void;
   join_room: (payload: JoinRoomPayload, ack: (res: RoomsResponse) => void) => void;
   set_options: (payload: SetOptionsPayload, ack: (res: RoomAckResponse) => void) => void;
+  start_game: (ack: (res: RoomAckResponse) => void) => void;
 }
 
 export interface JoinRoomPayload {
