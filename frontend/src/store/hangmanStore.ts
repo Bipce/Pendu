@@ -12,6 +12,7 @@ interface HangmanState {
   createRoom: () => Promise<void>;
   joinRoom: (data: JoinRoomPayload) => Promise<RoomsResponse>;
   setOptions: (roomOptions: SetOptionsPayload) => Promise<RoomAckResponse>;
+  startGame: () => Promise<RoomAckResponse>;
 }
 
 export const useHangmanStore = create<HangmanState>(set => ({
@@ -41,5 +42,9 @@ export const useHangmanStore = create<HangmanState>(set => ({
 
   setOptions: async data => {
     return socket.emitWithAck("set_options", data);
+  },
+
+  startGame: async () => {
+    return socket.emitWithAck("start_game");
   },
 }));

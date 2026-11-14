@@ -10,8 +10,8 @@ import type { Difficulty } from "../types/room.types.ts";
 
 const LobbyPage = () => {
   const [isCopied, setIsCopied] = useState(false);
-  const { room, localPlayer, setOptions } = useHangmanStore(
-    useShallow(s => ({ room: s.room, localPlayer: s.localPlayer, setOptions: s.setOptions })),
+  const { room, localPlayer, setOptions, startGame } = useHangmanStore(
+    useShallow(s => ({ room: s.room, localPlayer: s.localPlayer, setOptions: s.setOptions, startGame: s.startGame })),
   );
 
   if (!room) return <Navigate to="/menu" replace />;
@@ -35,6 +35,10 @@ const LobbyPage = () => {
 
   const handleDifficultyChange = async (difficulty: Difficulty) => {
     await setOptions({ difficulty });
+  };
+
+  const handleStartGame = async () => {
+    await startGame();
   };
 
   return (
@@ -154,7 +158,7 @@ const LobbyPage = () => {
           </div>
         </section>
 
-        <button className="main-button" disabled={!isHost}>
+        <button className="main-button" disabled={!isHost} onClick={handleStartGame}>
           Démarrer la partie
         </button>
       </section>
