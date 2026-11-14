@@ -60,4 +60,13 @@ export class RoomsService {
 
     return room;
   }
+
+  startGame(roomId: string): Room | undefined {
+    const room = this.get(roomId);
+
+    if (!room) return undefined;
+    room.status = "PLAYING";
+
+    return room;
+  }
 }
