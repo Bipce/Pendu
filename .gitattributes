@@ -1,0 +1,2 @@
+# Force LF line endings on checkout for all text files (avoids CRLF vs Prettier errors on Windows)
+* text=auto eol=lf
