@@ -5,3 +5,7 @@ export interface Game {
 }
 
 export type GameStatus = "PLAYING" | "WON" | "LOST";
+
+export type GameError = "GAME_FINISHED" | "ALREADY_GUESSED";
+
+export type GameResponse = { isOk: true } | { isOk: false; error: GameError };
