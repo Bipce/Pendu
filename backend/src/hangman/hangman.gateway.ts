@@ -92,9 +92,11 @@ export class HangmanGateway implements OnGatewayConnection, OnGatewayDisconnect 
     if (!room) return { isOk: false, error: "ROOM_NOT_FOUND" };
 
     if (room.hostId !== client.id) return { isOk: false, error: "NOT_HOST" };
-    this.roomsService.setOptions(roomId, data);
+    if (room.status !== "WAITING") return { isOk: false, error: "GAME_ALREADY_STARTED" };
 
+    this.roomsService.setOptions(roomId, data);
     this.server.to(roomId).emit("room_updated", room);
+
     return { isOk: true };
   }
 
