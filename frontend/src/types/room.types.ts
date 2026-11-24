@@ -14,7 +14,7 @@ export interface Room {
 
 export type RoomOptions = Pick<Room, "difficulty" | "lives">;
 
-export type RoomsResponse = { isOk: true; room: Room } | { isOk: false; error: RoomErrorCode };
+export type RoomResponse = { isOk: true; room: Room } | { isOk: false; error: RoomErrorCode };
 
 export type RoomAckResponse = { isOk: true } | { isOk: false; error: RoomErrorCode };
 

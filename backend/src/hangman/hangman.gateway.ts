@@ -12,7 +12,7 @@ import { plainToInstance } from "class-transformer";
 import { JoinDto } from "./dto/join.dto";
 import { validateSync } from "class-validator";
 import { RoomsService } from "./rooms/rooms.service";
-import type { Player, RoomAckResponse, RoomsResponse } from "./rooms/rooms.types";
+import type { Player, RoomAckResponse, RoomResponse } from "./rooms/rooms.types";
 import {
   ClientToServerEvents,
   type HangmanSocket,
@@ -54,7 +54,7 @@ export class HangmanGateway implements OnGatewayConnection, OnGatewayDisconnect 
   }
 
   @SubscribeMessage("create_room")
-  async createRoom(@ConnectedSocket() client: HangmanSocket): Promise<RoomsResponse> {
+  async createRoom(@ConnectedSocket() client: HangmanSocket): Promise<RoomResponse> {
     const player: Player = { id: client.id, username: client.data.username };
     const room = this.roomsService.create(player);
 
@@ -68,7 +68,7 @@ export class HangmanGateway implements OnGatewayConnection, OnGatewayDisconnect 
   async joinRoom(
     @ConnectedSocket() client: HangmanSocket,
     @MessageBody() data: JoinRoomPayload,
-  ): Promise<RoomsResponse> {
+  ): Promise<RoomResponse> {
     const player: Player = { id: client.id, username: client.data.username };
 
     const room = this.roomsService.get(data.roomId);
@@ -107,7 +107,7 @@ export class HangmanGateway implements OnGatewayConnection, OnGatewayDisconnect 
     return { isOk: true };
   }
 
-  private getPlayerRoom(client: HangmanSocket): RoomsResponse {
+  private getPlayerRoom(client: HangmanSocket): RoomResponse {
     const roomId = client.data.roomId;
     if (!roomId) return { isOk: false, error: "ROOM_NOT_FOUND" };
 
@@ -117,7 +117,7 @@ export class HangmanGateway implements OnGatewayConnection, OnGatewayDisconnect 
     return { isOk: true, room };
   }
 
-  private getHostWaitingRoom(client: HangmanSocket): RoomsResponse {
+  private getHostWaitingRoom(client: HangmanSocket): RoomResponse {
     const res = this.getPlayerRoom(client);
     if (!res.isOk) return res;
 
