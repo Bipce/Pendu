@@ -1,5 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { Player, Room, RoomOptions } from "./rooms.types";
+import { createGame } from "../game/game.engine";
 
 @Injectable()
 export class RoomsService {
@@ -14,6 +15,7 @@ export class RoomsService {
       difficulty: "MEDIUM",
       lives: 6,
       status: "WAITING",
+      game: null,
     };
 
     this.rooms.set(roomId, room);
@@ -63,9 +65,10 @@ export class RoomsService {
 
   startGame(roomId: string): Room | undefined {
     const room = this.get(roomId);
-
     if (!room) return undefined;
+
     room.status = "PLAYING";
+    room.game = createGame(room);
 
     return room;
   }

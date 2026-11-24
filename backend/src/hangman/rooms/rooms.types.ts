@@ -1,3 +1,5 @@
+import { Game } from "../game/game.types";
+
 export interface Player {
   id: string;
   username: string;
@@ -10,6 +12,7 @@ export interface Room {
   difficulty: Difficulty;
   lives: number;
   status: RoomStatus;
+  game: Game | null;
 }
 
 export type RoomOptions = Pick<Room, "difficulty" | "lives">;
