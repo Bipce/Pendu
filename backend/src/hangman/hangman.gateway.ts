@@ -85,35 +85,46 @@ export class HangmanGateway implements OnGatewayConnection, OnGatewayDisconnect 
 
   @SubscribeMessage("set_options")
   setRoomOptions(@ConnectedSocket() client: HangmanSocket, @MessageBody() data: SetOptionsPayload): RoomAckResponse {
-    const roomId = client.data.roomId;
-    if (!roomId) return { isOk: false, error: "ROOM_NOT_FOUND" };
+    const res = this.getHostWaitingRoom(client);
+    if (!res.isOk) return res;
 
-    const room = this.roomsService.get(roomId);
-    if (!room) return { isOk: false, error: "ROOM_NOT_FOUND" };
-
-    if (room.hostId !== client.id) return { isOk: false, error: "NOT_HOST" };
-    if (room.status !== "WAITING") return { isOk: false, error: "GAME_ALREADY_STARTED" };
-
-    this.roomsService.setOptions(roomId, data);
-    this.server.to(roomId).emit("room_updated", room);
+    const room = res.room;
+    this.roomsService.setOptions(room.id, data);
+    this.server.to(room.id).emit("room_updated", room);
 
     return { isOk: true };
   }
 
   @SubscribeMessage("start_game")
   startGame(@ConnectedSocket() client: HangmanSocket): RoomAckResponse {
+    const res = this.getHostWaitingRoom(client);
+    if (!res.isOk) return res;
+
+    const room = res.room;
+    this.roomsService.startGame(room.id);
+    this.server.to(room.id).emit("room_updated", room);
+
+    return { isOk: true };
+  }
+
+  private getPlayerRoom(client: HangmanSocket): RoomsResponse {
     const roomId = client.data.roomId;
     if (!roomId) return { isOk: false, error: "ROOM_NOT_FOUND" };
 
     const room = this.roomsService.get(roomId);
     if (!room) return { isOk: false, error: "ROOM_NOT_FOUND" };
 
+    return { isOk: true, room };
+  }
+
+  private getHostWaitingRoom(client: HangmanSocket): RoomsResponse {
+    const res = this.getPlayerRoom(client);
+    if (!res.isOk) return res;
+
+    const room = res.room;
     if (room.hostId !== client.id) return { isOk: false, error: "NOT_HOST" };
     if (room.status !== "WAITING") return { isOk: false, error: "GAME_ALREADY_STARTED" };
 
-    this.roomsService.startGame(roomId);
-    this.server.to(roomId).emit("room_updated", room);
-
-    return { isOk: true };
+    return res;
   }
 }
